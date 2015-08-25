@@ -1,0 +1,55 @@
+#!/bin/sh
+# $XConsortium: xinitrc.cpp,v 1.4 91/08/22 11:41:34 rws Exp $
+
+userresources=$HOME/.Xresources
+usermodmap=$HOME/.Xmodmap
+sysresources=/etc/X11/xinit/.Xresources
+sysmodmap=/etc/X11/xinit/.Xmodmap
+
+# merge in defaults and keymaps
+
+if [ -f $sysresources ]; then
+    xrdb -merge $sysresources
+fi
+
+if [ -f $sysmodmap ]; then
+    xmodmap $sysmodmap
+fi
+
+if [ -f $userresources ]; then
+    xrdb -merge $userresources
+fi
+
+if [ -f $usermodmap ]; then
+    xmodmap $usermodmap
+fi
+
+A=2560
+B=1700
+C=1920
+D=1080
+E=3
+F=3
+
+#echo "xrandr --ouput eDP1 --auto --pos 0x$(($D * $F)) --output DP1 --auto --scale $(($E))x$(($F)) --pos 0x0 --fb $(($C * $E))x$(($B+($D * $F)))" >> ~/log.ameth
+xrandr --dpi 184
+#xrandr --ouput eDP1 --auto --pos 5000x0  --output DP1 --auto --scale 2x2 --pos 0x0
+#xrandr dpi 240 --ouput eDP1 --auto --pos 0x$(($D * $F)) --output DP1 --auto --scale $(($E))x$(($F)) --pos 0x0 --fb $(($C * $E))x$(($B+($D * $F)))
+#echo output >> ~/.log.ameth
+
+#./test/extend.sh
+#echo $(xrandr --output eDP1 --auto --output DP1 --auto --panning $(($C * $E))x$(($D * $F))+$(($A))+0 --scale $(($E))x$(($F)) --left-of eDP1) >> ~/log.please
+#echo "xrandr --output eDP1 --auto --output DP1 --auto --panning $(($C * $E))x$(($D * $F))+$(($A))+0 --scale $(($E))x$(($F)) --left-of eDP1" >> ~/log.bmeth
+#xrandr --output eDP1 --auto --pos 0x2160 
+#xrandr --output DP1 --auto --scale 2x2 --pos 0x0 --fb 2592x3860
+#xrandr --output eDP1 --auto --output DP1 --auto --panning 3840x2160+2560+0 --scale 2x2 --left-of eDP1
+
+#xrandr --output DP1 --scale 2x2 --mode 1920x1080 --pos 0x0 --output eDP1 --scale 1x1 --pos 3840x0
+xbindkeys
+
+# Start the window manager:
+if [ -z "$DESKTOP_SESSION" -a -x /usr/bin/ck-launch-session ]; then
+    ck-launch-session startkde
+else
+    startkde
+fi
