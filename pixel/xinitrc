@@ -49,7 +49,7 @@ xbindkeys
 
 # Start the window manager:
 if [ -z "$DESKTOP_SESSION" -a -x /usr/bin/ck-launch-session ]; then
-    ck-launch-session startkde
+    ck-launch-session startxfce4
 else
-    startkde
+    startxfce4
 fi
